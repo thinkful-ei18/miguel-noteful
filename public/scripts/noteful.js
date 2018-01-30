@@ -52,6 +52,7 @@ const noteful = (function () {
   function handleNoteSearchSubmit() {
     $('.js-notes-search-form').on('submit', event => {
       event.preventDefault();
+      console.log('this is wokring');
 
       const searchTerm = $('.js-note-search-entry').val();
       store.currentSearchTerm =  searchTerm ? { searchTerm } : {};
