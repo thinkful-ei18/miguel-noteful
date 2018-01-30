@@ -1,39 +1,74 @@
 'use strict';
 const express = require('express');
+
 const data = require('./db/notes');
+const simDB = require('./db/simDB');
+const notes = simDB.initialize(data);
 
 
-
-const app = express();
 const {PORT} = require('./config');
 const {ourLogger} = require('./middlewares/logger');
 
+const app = express();
 app.use(express.static('public'));
+
 app.use(ourLogger);
+app.use(express.json());
 
 
-app.get('/v1/notes', (req, res) => {
-  if(!req.query.searchTerm){
-    res.json(data);
-  }
-  else{
-    const mySearch=data.filter(note=>note.title.includes(req.query.searchTerm));
-    res.json(mySearch);
-  }
-});
-
-app.get('/boom',(req,res,next)=>{
-  throw new Error('Boom!!');
-  next();
+app.get('/v1/notes', (req, res,next) => {
+  const {searchTerm} = req.query;
+  notes.filter(searchTerm,(err,list)=>{
+    if(err){
+      return next(err);
+    }
+    res.json(list);
+  });
 });
 
 app.get('/v1/notes/:id',(req,res)=>{
+  console.log('first endy');
   const {id} = req.params;
   const rawId =parseInt(id,10);
-  console.log(rawId);
-  res.json(data.find(item=>item.id===rawId));
-
+  notes.find(rawId, (err, item,next) => {
+    if (err) {
+      return next(err);
+    }
+    if (item) {
+      res.json(item);
+    } else {
+      res.json('not found');
+    }
+  });
 });
+
+app.put('/v1/notes/:id', (req, res, next) => {
+  console.log('second endy');
+  const id = req.params.id;
+  /***** Never trust users - validate input *****/
+  const updateObj = {};
+  const updateFields = ['title', 'content'];
+ 
+  updateFields.forEach(field => {
+    if (field in req.body) {
+      updateObj[field] = req.body[field];
+    }
+  });
+
+  notes.update(id, updateObj, (err, item) => {
+    if (err) {
+      return next(err);
+    }
+    if (item) {
+      console.log('a change occured');
+      res.json(item);
+
+    } else {
+      next();
+    }
+  });
+});
+
 
 app.use(function (req, res, next) {
   var err = new Error('Not Found');
