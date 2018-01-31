@@ -66,7 +66,7 @@ const noteful = (function () {
 
   function handleNoteFormSubmit() {
     $('.js-note-edit-form').on('submit', function (event) {
-      event.preventDefault()
+      event.preventDefault();
       const editForm = $(event.currentTarget);
 
       const noteObj = {
@@ -80,10 +80,8 @@ const noteful = (function () {
         store.currentNote = updateResponse;
         api.search(store.currentSearchTerm, updateResponse => {
           store.notes = updateResponse;
-          
           render();
         });
-
 
       });
 

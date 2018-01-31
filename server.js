@@ -5,7 +5,6 @@ const data = require('./db/notes');
 const simDB = require('./db/simDB');
 const notes = simDB.initialize(data);
 
-
 const {PORT} = require('./config');
 const {ourLogger} = require('./middlewares/logger');
 
@@ -14,7 +13,6 @@ app.use(express.static('public'));
 
 app.use(ourLogger);
 app.use(express.json());
-
 
 app.get('/v1/notes', (req, res,next) => {
   const {searchTerm} = req.query;
@@ -27,7 +25,6 @@ app.get('/v1/notes', (req, res,next) => {
 });
 
 app.get('/v1/notes/:id',(req,res)=>{
-  console.log('first endy');
   const {id} = req.params;
   const rawId =parseInt(id,10);
   notes.find(rawId, (err, item,next) => {
@@ -43,7 +40,6 @@ app.get('/v1/notes/:id',(req,res)=>{
 });
 
 app.put('/v1/notes/:id', (req, res, next) => {
-  console.log('second endy');
   const id = req.params.id;
   /***** Never trust users - validate input *****/
   const updateObj = {};
@@ -69,13 +65,11 @@ app.put('/v1/notes/:id', (req, res, next) => {
   });
 });
 
-
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+  const err = new Error('Not Found');
   err.status = 404;
   res.status(404).json({ message: 'Not Found' });
 });
-
 
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);
@@ -84,7 +78,6 @@ app.use(function (err, req, res, next) {
     error: err
   });
 });
-
 
 app.listen(PORT, function () {
   console.info(`Server listening on ${this.address().port}`);
