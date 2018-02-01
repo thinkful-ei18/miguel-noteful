@@ -3,50 +3,46 @@
 
 const api = {
   
-  search: function (query, callback) {
-    $.ajax({
+  search: function (query) {
+    console.log('making search call');
+    return $.ajax({
       type: 'GET',
       url: '/v1/notes/',
       dataType: 'json',
       data: query,
-      success: callback
     });
   },
   
-  details: function (id, callback) {
-    $.ajax({
+  details: function (id) {
+    return $.ajax({
       type: 'GET',
       dataType: 'json',
       url: `/v1/notes/${id}`,
-      success: callback
     });
   },
-  update: function(id, obj, callback) {
-    $.ajax({
+  update: function(id, obj) {
+    return $.ajax({
       type: 'PUT',
       url: `/v1/notes/${id}`,
       contentType: 'application/json',
       dataType: 'json',
-      data: JSON.stringify(obj),
-      success: callback
+      data: JSON.stringify(obj)
     });
   },
-  create: function(obj,callback){
+  create: function(obj){
     console.log('creating obj ',obj);
-    $.ajax({
+    return $.ajax({
       type:'POST',
       url:'/v1/notes',
       contentType:'application/json',
       dataType:'json',
-      data:JSON.stringify(obj),
-      success:callback
+      data:JSON.stringify(obj)
     });
   },
-  delete: function(id,callback){
-    $.ajax({
+  delete: function(id){
+    return $.ajax({
       type:'DELETE',
-      url:`/v1/notes/${id}`,
-      success:callback
+      url:`/v1/notes/${id}`
     });
   }
 }; 

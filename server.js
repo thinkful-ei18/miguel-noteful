@@ -1,6 +1,7 @@
 'use strict';
-const express = require('express');
+
 const {PORT} = require('./config');
+const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const notesRouter = require('./routers/notes.router');
