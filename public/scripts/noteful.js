@@ -54,7 +54,9 @@ const noteful = (function () {
       event.preventDefault();
       const noteId = getNoteIdFromElement(event.currentTarget);
       api.delete(noteId)
-        .then(api.search)
+        .then(()=>{
+          return api.search(store.currentSearchTerm);
+        })
         .then(response=>{
           store.notes=response;
           render();
@@ -74,6 +76,34 @@ const noteful = (function () {
         });
     });
   }
+  function handleNewNote(noteObj){
+    if (noteObj.id) {
+      api.update(store.currentNote.id, noteObj)
+        .then(updateResponse => {
+          store.currentNote = updateResponse;
+          return api.search(store.currentSearchTerm);
+          // return helper(updateResponse);
+        })
+        .then(updateResponse=>{
+          store.notes = updateResponse;
+          return render();
+          //func b
+        });
+    }
+    else {
+      api.create(noteObj)
+        .then(updateResponse=>{
+          store.currentNote=updateResponse;
+          return api.search(store.currentSearchTerm);
+          //func a
+        })
+        .then(updateResponse=>{
+          store.notes=updateResponse;
+          return render();
+          //func b
+        });
+    }
+  }
 
   function handleNoteFormSubmit() {
     $('.js-note-edit-form').on('submit', function (event) {
@@ -84,31 +114,8 @@ const noteful = (function () {
         title: editForm.find('.js-note-title-entry').val(),
         content: editForm.find('.js-note-content-entry').val()
       };
-
       noteObj.id = store.currentNote.id;
-      if (store.currentNote.id) {
-        api.update(store.currentNote.id, noteObj) 
-          .then(updateResponse => {
-            store.currentNote = updateResponse;
-            return api.search(store.currentSearchTerm);
-          })
-          .then(updateResponse=>{
-            store.notes = updateResponse;
-            return render();
-          });
-      }
-      else {
-        api.create(noteObj)
-          .then(updateResponse=>{
-            store.currentNote=updateResponse;
-            return api.search(store.currentSearchTerm);
-          })
-          .then(updateResponse=>{
-            store.notes=updateResponse;
-            return render();
-          });
-      }
-     
+      handleNewNote(noteObj);
     });
   }
 

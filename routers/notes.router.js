@@ -10,12 +10,6 @@ const notes = simDB.initialize(data);
 
 router.get('/notes', (req, res,next) => {
   const {searchTerm} = req.query;
-  // notes.filter(searchTerm,(err,list)=>{
-  //   if(err){
-  //     return next(err);
-  //  } 
-  //   res.json(list);
-  // });
   notes.filter(searchTerm)
     .then(item=>{
       if(item){
@@ -32,7 +26,6 @@ router.get('/notes', (req, res,next) => {
 router.get('/notes/:id',(req,res,next)=>{
   const {id} = req.params;
   const rawId =parseInt(id,10);
-
   notes.find(rawId)
     .then(item =>{
       if(item){
@@ -58,19 +51,6 @@ router.put('/notes/:id', (req, res, next) => {
     }
   });
 
-  // notes.update(id, updateObj, (err, item) => {
-  //   if (err) {
-  //     return next(err);
-  //   }
-  //   if (item) {
-  //     console.log('a change occured');
-  //     res.json(item);
-
-  //   } else {
-  //     next();
-  //   }
-  // });
-  // 
   notes.update(id,updateObj)
     .then(item=>{
       if(item){
@@ -109,19 +89,6 @@ router.post('/notes',(req,res,next)=>{
 
 router.delete('/notes/:id',(req,res,next)=>{
   const id = req.params.id;
-  // notes.delete(id ,(err,len)=>{
-  //   if(err){
-  //     const err = new Error('id does not exist in database');
-  //     err.status = 400;
-  //     return next(err);
-  //   }
-  //   else if(len){
-  //     res.location(`http://${req.headers.host}/notes/${id}`).status(202).json(id);
-  //   }
-  //   else{
-  //     next();
-  //   }
-  // });
   notes.delete(id)
     .then(len=>{
       if(len){
