@@ -1,9 +1,2 @@
 language: node_js
 node_js: node
-deploy:
-  provider: heroku
-  api_key:
-    secure: kRCipWYKZBlDsUX7MSLdDLEATqJkm/qK5MX08uVs0siWDrj0mUZMc7zZR2Ikn/VtFEABISscrmJmwEgN31GGOA0NRojZf0zEn3AP44n1yKCD2lCHQfj9AHF/bPLxErBGZ8TLNBXvqZBYkRSKViA4IjZ3q4Gr324vcUfy9We/Jzqm5CBOuFur/iEe1cRB7gAE4QdbRffVj5cgjVvKCKazH4mcjWFRNx0qextvSra5Ra4fG5yPVWw9NQDeM+MLz17Pms5R30Pn7y9jHqASfAljKKZS7dUok4uil5JxFg13oLEgpdw+KwmxN78fEXEIbnddOO8XR9YJ8+dFNHDc14WK+FBsR5Ts+b+Prw5nZjdsoUwsrhGPM8P+3k5D39WfLfp7Hfs4TrAdLN7Qxq+h2IqCSHNcc2N4MScoOGG4GUTXkbpyMZnezEhyMGZWOF3iuH0SdYh/UNsTxcXzEsKVxta8ij9RFk8XCCiII6Jh9s5JGwl3j7e/5rfKE74h61eoS1a+6l6Qb4i56E+CUWXYbtDZZYd2E/tIMALSiKNHtxxDrNbTlbKCYuQ57AENjYKbO1oOXnHsy55qx/6IA1wNoa/1vnOTACMMkh28xktAVWGNBEnjaCFr3pIsSbQlpngC2Kgi040As59AYgWgcjl0Le+FE9DW4eV1WWlPTRKEWj9SO0o=
-  app: e18-noteful-miggy
-  on:
-    repo: thinkful-ei18/miguel-noteful
