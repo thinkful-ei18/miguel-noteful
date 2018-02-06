@@ -32,6 +32,16 @@ const noteful = (function () {
     const id = $(item).closest('.js-note-element').data('id');
     return id;
   }
+  function serverStoreHelper(apiResponse){
+    store.currentNote = apiResponse;
+    return api.search(store.currentSearchTerm);
+  }
+
+  function renderHelper(apiResponse){
+    store.notes = apiResponse;
+    return render();
+  }
+
 
   /**
    * EVENT LISTENERS AND HANDLERS
@@ -76,34 +86,20 @@ const noteful = (function () {
         });
     });
   }
+
   function handleNewNote(noteObj){
     if (noteObj.id) {
       api.update(store.currentNote.id, noteObj)
-        .then(updateResponse => {
-          store.currentNote = updateResponse;
-          return api.search(store.currentSearchTerm);
-          // return helper(updateResponse);
-        })
-        .then(updateResponse=>{
-          store.notes = updateResponse;
-          return render();
-          //func b
-        });
+        .then(serverStoreHelper)
+        .then(renderHelper);
     }
     else {
       api.create(noteObj)
-        .then(updateResponse=>{
-          store.currentNote=updateResponse;
-          return api.search(store.currentSearchTerm);
-          //func a
-        })
-        .then(updateResponse=>{
-          store.notes=updateResponse;
-          return render();
-          //func b
-        });
+        .then(serverStoreHelper)
+        .then(renderHelper);
     }
   }
+
 
   function handleNoteFormSubmit() {
     $('.js-note-edit-form').on('submit', function (event) {
@@ -137,7 +133,7 @@ const noteful = (function () {
 
   // This object contains the only exposed methods from this module:
   return {
-    render: render,
+    renderHelper:renderHelper,
     bindEventListeners: bindEventListeners,
   };
 

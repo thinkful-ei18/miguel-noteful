@@ -6,11 +6,7 @@ $(document).ready(function () {
 
   
   api.search({})
-    .then(response=>{
-      store.notes = response;
-      return noteful.render();
-    });
-
+    .then(store.renderHelper);
 });
 
 

@@ -23,7 +23,23 @@ SELECT CURRENT_DATE;
 -- RETURNING title, content; 
 
 -- DROP TABLE notes;
--- SELECT * FROM notes
+SELECT * FROM notes
 
-SELECT * FROM NOTES 
-LIMIT 5;
+-- SELECT * FROM notes
+-- LIMIT 5;
+
+-- SELECT * FROM notes 
+-- ORDER BY title ASC;
+
+-- SELECT * FROM notes WHERE title = '5 life lessons learned from cats'
+
+-- SELECT * FROM notes WHERE title LIKE '%you %'
+
+
+-- INSERT INTO notes 
+-- (title,content)
+-- VALUES 
+-- ('this is a new note not about cats','the content also does not have cats');
+
+-- DELETE FROM notes 
+-- WHERE id = 1007
