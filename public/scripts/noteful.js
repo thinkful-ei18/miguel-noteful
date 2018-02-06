@@ -67,10 +67,7 @@ const noteful = (function () {
         .then(()=>{
           return api.search(store.currentSearchTerm);
         })
-        .then(response=>{
-          store.notes=response;
-          render();
-        });
+        .then(serverStoreHelper);
     });
   }
 
